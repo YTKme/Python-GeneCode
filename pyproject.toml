@@ -1,0 +1,50 @@
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools_scm",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genecode"
+authors = [
+    {name = "Yan Kuang"},
+]
+description = "Gene Code"
+requires-python = ">=3.9"
+keywords = [ "genecode" ]
+dependencies = [
+    "pytest"
+]
+dynamic = [
+    "version",
+    "readme"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+develop = [
+  "pytest"
+]
+
+[project.scripts]
+genecode = "genecode.genecode:main"
+
+[project.urls]
+"Homepage" = "https://github.com/YTKme/Python-GeneCode"
+"Bug Tracker" = "https://github.com/YTKme/Python-GeneCode/issues"
+
+[tool.distutils.bdist_wheel]
+universal = true
+
+[tool.setuptools]
+packages = [
+    "genecode"
+]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
+readme = {file = ["README.md"]}
