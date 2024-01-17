@@ -15,6 +15,7 @@ description = "Gene Code"
 requires-python = ">=3.9"
 keywords = [ "genecode" ]
 dependencies = [
+    "pylint",
     "pytest"
 ]
 dynamic = [
@@ -24,14 +25,20 @@ dynamic = [
 
 [project.optional-dependencies]
 test = [
+    "pylint",
     "pytest"
 ]
 develop = [
-  "pytest"
+    "pylint",
+    "pytest"
 ]
 
 [project.scripts]
-genecode = "genecode.genecode:main"
+genecode = "genecode.cli:main"
+genecodecli = "genecode.cli:main"
+
+[project.gui-scripts]
+genecodegui = "genecode.gui:main"
 
 [project.urls]
 "Homepage" = "https://github.com/YTKme/Python-GeneCode"
