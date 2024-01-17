@@ -1,2 +1,3 @@
 biopython
+pylint
 pytest
