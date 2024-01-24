@@ -2,10 +2,12 @@
 CLI (Command Line Interface)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The CLI (Command Line Interface) functionality.
+The `cli` module provide functionality for the user to interact via the
+CLI (Command Line Interface).
 """
 
 import argparse
+import sys
 
 
 def parse_argument():
@@ -40,6 +42,8 @@ def parse_argument():
         parents=[parent_parser],
     )
 
+    # General Argument
+
     # Database Argument
     child_parser.add_argument(
         '-e',
@@ -62,7 +66,7 @@ def parse_argument():
         help='The `query` to execute.'
     )
 
-    return child_parser.parse_args()
+    return child_parser.parse_args(args=(sys.argv[1:] or ['--help']))
 
 
 def main():
