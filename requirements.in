@@ -1,5 +1,7 @@
+aiohttp
 biopython
 pylint
 pytest
+pytest-asyncio
 PyYAML
 tealogger
