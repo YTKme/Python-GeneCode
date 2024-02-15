@@ -15,8 +15,9 @@ description = "Gene Code"
 requires-python = ">=3.9"
 keywords = [ "genecode" ]
 dependencies = [
-    "pylint",
-    "pytest"
+    "aiohttp",
+    "biopython",
+    "tealogger",
 ]
 dynamic = [
     "version",
@@ -26,11 +27,13 @@ dynamic = [
 [project.optional-dependencies]
 test = [
     "pylint",
-    "pytest"
+    "pytest",
+    "pytest-asyncio",
 ]
 develop = [
     "pylint",
-    "pytest"
+    "pytest",
+    "pytest-asyncio",
 ]
 
 [project.scripts]
