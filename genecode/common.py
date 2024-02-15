@@ -38,6 +38,36 @@ def fuzz(is_fuzz: bool = False) -> None:
         time.sleep(random.random())
 
 
+def load_text_file(path: PathLike) -> list[str]:
+    """Load a text file.
+
+    :param path: The path to the text file
+    :type path: PathLike
+    :returns: The text data as a list of string
+    :rtype: list[str]
+    """
+    common_logger.info('Loading text file %s', path)
+
+    with open(path, 'r', encoding='utf-8') as file:
+        data = file.readlines()
+
+    common_logger.info('Done loading text file %s', path)
+    common_logger.debug('Text data: %s', data)
+
+    return data
+
+
+def dump_text_file(path: PathLike, data: list[str]) -> None:
+    """Dump a text file.
+
+    :param path: The path to write the text file
+    :type path: PathLike
+    :param data: The text data as a list of string
+    :type data: list[str]
+    """
+    ...
+
+
 def load_csv_file(path: PathLike) -> list[dict]:
     """Load a CSV file.
 
@@ -62,7 +92,7 @@ def load_csv_file(path: PathLike) -> list[dict]:
 def dump_csv_file(path: PathLike, data: list[dict]) -> None:
     """Dump a CSV file.
 
-    :param path: The path to the CSV file
+    :param path: The path to write the CSV file
     :type path: PathLike
     :param data: The CSV data as a list of dictionary
     :type data: list[dict]
@@ -104,7 +134,7 @@ def load_json_file(path: PathLike) -> dict:
 def dump_json_file(path: PathLike, data: dict) -> None:
     """Dump a JSON file.
 
-    :param path: The path to the JSON file
+    :param path: The path to write the JSON file
     :type path: PathLike
     :param data: The JSON data as a dictionary
     :type data: dict
@@ -141,7 +171,7 @@ def load_yaml_file(path: PathLike) -> dict:
 def dump_yaml_file(path: PathLike, data: dict) -> None:
     """Dump a YAML file.
 
-    :param path: The path to the YAML file
+    :param path: The path to write the YAML file
     :type path: PathLike
     :param data: The YAML data as a dictionary
     :type data: dict
