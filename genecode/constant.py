@@ -8,6 +8,10 @@ The `constant` module provide constant value(s).
 # The maximum number UID (Unique IDentifier) to retrieve
 RETRIEVE_MAXIMUM = 100
 
+# Default maximum request(s) per second for Entrez Programming Utilities
+DEFAULT_MAXIMUM_REQUEST = 3
+DEFAULT_MAXIMUM_REQUEST_API_KEY = 10
+
 # Entrez Unique Identifiers (UIDs) for selected databases
 ENTREZ_DATABASE = [
     {
