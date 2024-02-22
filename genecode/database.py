@@ -9,6 +9,8 @@ from Bio import Entrez
 from Bio import SeqIO
 import tealogger
 
+from genecode import constant
+
 
 class Database:
     """Database"""
@@ -27,7 +29,7 @@ class Database:
     ) -> None:
         """Constructor
 
-        :param email: the email address
+        :param email: The `email` address
         :type email: str
         """
 
@@ -37,7 +39,7 @@ class Database:
 
         self._email = email
 
-    def search(
+    async def search(
         self,
         database: str,
         term: str,
@@ -45,9 +47,9 @@ class Database:
     ) -> None:
         """Search
 
-        :param database: the database to search
+        :param database: The `database` to search
         :type database: str
-        :param term: the query to search
+        :param term: The `term` (query) to search
         :type term: str
         """
 
@@ -65,7 +67,49 @@ class Database:
         record = Entrez.read(handle)
         # Get a `Count` of the result(s)
         record_count = record['Count']
-        self._logger.debug(f'Record Count: {record_count}')
+        self._logger.debug('Record Count: %s', record_count)
+        # self._logger.debug(f'Record: {record}')
+
+        # if (kwargs.get('retmax') and kwargs.get('retmax') > record_count) or (constant.RETRIEVE_MAX > record_count):
+        #     ...
+
+    async def _query(
+        self,
+        database: str,
+        term: str,
+        retrieve_start: int = 0,
+        retrieve_max: int = constant.RETRIEVE_MAX,
+    ) -> list[str]:
+        """Query
+
+        :param database: The `database` to query
+        :type database: str
+        :param term: The `term` (query) to search
+        :type term: str
+        :param retrieve_start: The sequential index of the first UID in
+            the retrieved set in output, defaults to `0`
+        :type retrieve_start: int, optional
+        :param retrieve_max: The total number of UIDs from the retrieved
+            set in output, defaults to `RETRIEVE_MAX`
+        :type retrieve_max: int, optional
+        :return: The list of UID(s)
+        :rtype: list[str]
+        """
+        # Configure the Entrez email
+        Entrez.email = self._email
+
+        # Execute the search and get a `handle` for the result(s)
+        handle = Entrez.esearch(
+            db=database,
+            term=term,
+            retstart=retrieve_start,
+            retmax=retrieve_max,
+        )
+
+        # Execute an initial `read` to parse the result(s)
+        record = Entrez.read(handle)
+
+        return record['IdList']
 
 
 # query = '"escherichia coli"[Organism]'
