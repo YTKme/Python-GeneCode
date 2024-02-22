@@ -9,7 +9,9 @@ from Bio import Entrez
 from Bio import SeqIO
 import tealogger
 
-from genecode import constant
+from genecode.constant import (
+    RETRIEVE_MAXIMUM,
+)
 
 
 class Database:
@@ -26,11 +28,14 @@ class Database:
     def __init__(
         self,
         email: str,
+        api_key: str = None,
     ) -> None:
         """Constructor
 
-        :param email: The `email` address
+        :param email: The `email` address of the account
         :type email: str
+        :param api_key: The `api_key` of the account, defaults to `None`
+        :type api_key: str, optional
         """
 
         # Configure Logger
@@ -38,11 +43,13 @@ class Database:
         self._logger.setLevel(tealogger.DEBUG)
 
         self._email = email
+        self._api_key = api_key
 
     async def search(
         self,
         database: str,
         term: str,
+        retrieve_maximum: int = RETRIEVE_MAXIMUM,
         **kwargs,
     ) -> None:
         """Search
@@ -51,24 +58,29 @@ class Database:
         :type database: str
         :param term: The `term` (query) to search
         :type term: str
+        :param retrieve_maximum: The maximum number UID (Unique
+            IDentifier) to retrieve, defaults to `RETRIEVE_MAX`
+        :type retrieve_maximum: int, optional
         """
 
         # Configure the Entrez email
         Entrez.email = self._email
+        Entrez.api_key = self._api_key
 
         # Execute the search and get a `handle` for the result(s)
         handle = Entrez.esearch(
             db=database,
             term=term,
+            retmax=retrieve_maximum,
             **kwargs,
         )
 
         # Execute an initial `read` to parse the result(s)
         record = Entrez.read(handle)
-        # Get a `Count` of the result(s)
-        record_count = record['Count']
+        # Get a `Count` of the result(s), convert to `int`
+        record_count = int(record['Count'])
         self._logger.debug('Record Count: %s', record_count)
-        # self._logger.debug(f'Record: {record}')
+        self._logger.debug(f'Record: {record}')
 
         # if (kwargs.get('retmax') and kwargs.get('retmax') > record_count) or (constant.RETRIEVE_MAX > record_count):
         #     ...
@@ -78,7 +90,7 @@ class Database:
         database: str,
         term: str,
         retrieve_start: int = 0,
-        retrieve_max: int = constant.RETRIEVE_MAX,
+        retrieve_max: int = RETRIEVE_MAXIMUM,
     ) -> list[str]:
         """Query
 

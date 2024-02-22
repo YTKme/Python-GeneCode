@@ -6,7 +6,7 @@ The `constant` module provide constant value(s).
 """
 
 # The maximum number UID (Unique IDentifier) to retrieve
-RETRIEVE_MAX = 100
+RETRIEVE_MAXIMUM = 100
 
 # Entrez Unique Identifiers (UIDs) for selected databases
 ENTREZ_DATABASE = [
