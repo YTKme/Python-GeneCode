@@ -49,7 +49,6 @@ class Database:
         self,
         database: str,
         term: str,
-        retrieve_maximum: int = RETRIEVE_MAXIMUM,
         **kwargs,
     ) -> None:
         """Search
@@ -58,9 +57,6 @@ class Database:
         :type database: str
         :param term: The `term` (query) to search
         :type term: str
-        :param retrieve_maximum: The maximum number UID (Unique
-            IDentifier) to retrieve, defaults to `RETRIEVE_MAX`
-        :type retrieve_maximum: int, optional
         """
 
         # Configure the Entrez email
@@ -71,7 +67,6 @@ class Database:
         handle = Entrez.esearch(
             db=database,
             term=term,
-            retmax=retrieve_maximum,
             **kwargs,
         )
 
