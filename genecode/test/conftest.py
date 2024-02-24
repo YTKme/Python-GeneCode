@@ -33,6 +33,21 @@ def email() -> str:
 
 
 @pytest.fixture(scope='session')
+def api_key() -> str:
+    """API Key
+
+    Get and return the `api_key`.
+
+    :return: The `api_key`
+    :rtype: str
+    """
+
+    data = common.load_json_file(CURRENT_MODULE_PATH.parent / 'metadata.json')
+
+    return data['database']['api_key']
+
+
+@pytest.fixture(scope='session')
 def setup_teardown_database():
     """Setup and Teardown Database
 
